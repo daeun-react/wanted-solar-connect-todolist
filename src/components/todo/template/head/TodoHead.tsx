@@ -23,8 +23,15 @@ const DayText = styled.div`
 
 const TodoHead = () => {
   //@TODO 현재 시간을 표시해야합니다.
-  const dayString = "Tuesday";
-  const dateString = "July 20, 2021";
+  const today = new Date();
+  const dateString = today.toLocaleDateString("en-US", {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  });
+  const dayString = today.toLocaleDateString("en-US", {
+    weekday: "long",
+  });
 
   return (
     <TodoHeadBlock>
