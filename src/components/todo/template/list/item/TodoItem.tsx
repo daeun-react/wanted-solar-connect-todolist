@@ -62,15 +62,14 @@ interface TodoItemProps {
 }
 
 const TodoItem = ({ toggleTodo, removeTodo, todo }: TodoItemProps) => {
-  const done = false;
-  const handleToggle = () => {};
+  const { id, text, done } = todo;
+
+  const handleToggle = () => {
+    toggleTodo(id);
+  };
 
   const handleRemove = () => {
-    ModalConfirm(
-      `"${todo.text}" 할 일을 삭제하시겠습니까? `,
-      todo.id,
-      removeTodo
-    );
+    ModalConfirm(`"${text}" 할 일을 삭제하시겠습니까? `, id, removeTodo);
   };
 
   return (
@@ -78,7 +77,7 @@ const TodoItem = ({ toggleTodo, removeTodo, todo }: TodoItemProps) => {
       <CheckCircle done={done} onClick={handleToggle}>
         {done && <CheckOutlined />}
       </CheckCircle>
-      <Text done={done}>{todo.text}</Text>
+      <Text done={done}>{text}</Text>
       <Remove onClick={handleRemove}>
         <DeleteOutlined />
       </Remove>
