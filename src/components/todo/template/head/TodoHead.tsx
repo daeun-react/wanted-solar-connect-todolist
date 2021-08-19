@@ -1,5 +1,7 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
+import { DATE_OPTION, DAY_OPTION, TIME_OPTION } from "utils/constants";
+import { getDate } from "utils/date";
 
 const TodoHeadBlock = styled.div`
   display: flex;
@@ -21,22 +23,26 @@ const DayText = styled.div`
   padding-top: 5px;
 `;
 
+const TimeText = styled(DateText)``;
+
 const TodoHead = () => {
-  //@TODO 현재 시간을 표시해야합니다.
-  const today = new Date();
-  const dateString = today.toLocaleDateString("en-US", {
-    year: "numeric",
-    month: "long",
-    day: "numeric",
-  });
-  const dayString = today.toLocaleDateString("en-US", {
-    weekday: "long",
-  });
+  const [date, setDate] = useState(new Date());
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setDate(new Date());
+    }, 1000);
+
+    return () => {
+      clearInterval(timer);
+    };
+  }, []);
 
   return (
     <TodoHeadBlock>
-      <DayText>{dayString}</DayText>
-      <DateText>{dateString}</DateText>
+      <DayText>{getDate(date, DAY_OPTION)}</DayText>
+      <DateText>{getDate(date, DATE_OPTION)}</DateText>
+      <TimeText>{getDate(date, TIME_OPTION)}</TimeText>
     </TodoHeadBlock>
   );
 };
