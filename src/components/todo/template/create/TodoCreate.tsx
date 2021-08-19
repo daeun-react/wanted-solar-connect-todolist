@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import styled from "styled-components";
+import { Modal } from "antd";
 import { PlusCircleOutlined } from "@ant-design/icons";
 import { Itodo } from "components/todo/TodoService";
 
@@ -58,10 +59,18 @@ interface TodoCreateProps {
 const TodoCreate = ({
   nextId,
   createTodo,
-  incrementNextId
+  incrementNextId,
 }: TodoCreateProps) => {
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState("");
+
+  const error = (content: string): void => {
+    Modal.error({
+      title: "ERROR!",
+      content,
+      centered: true,
+    });
+  };
 
   const handleToggle = () => setOpen(!open);
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) =>
@@ -70,10 +79,16 @@ const TodoCreate = ({
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault(); // 새로고침 방지
 
+    if (!value.trim()) {
+      error("입력란이 비어 있습니다. 할 일을 작성해주세요😅");
+      setValue("");
+      return;
+    }
+
     createTodo({
       id: nextId,
       text: value,
-      done: false
+      done: false,
     });
     incrementNextId(); // nextId 하나 증가
 
