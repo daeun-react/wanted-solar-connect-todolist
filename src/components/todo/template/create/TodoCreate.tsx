@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import { Modal } from "antd";
 import { PlusCircleOutlined } from "@ant-design/icons";
+import { ModalError } from "utils/modal";
 import { Itodo } from "components/todo/TodoService";
 
 const CircleButton = styled.button<{ open: boolean }>`
@@ -64,14 +64,6 @@ const TodoCreate = ({
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState("");
 
-  const error = (content: string): void => {
-    Modal.error({
-      title: "ERROR!",
-      content,
-      centered: true,
-    });
-  };
-
   const handleToggle = () => setOpen(!open);
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) =>
     setValue(e.target.value);
@@ -80,7 +72,7 @@ const TodoCreate = ({
     e.preventDefault(); // 새로고침 방지
 
     if (!value.trim()) {
-      error("입력란이 비어 있습니다. 할 일을 작성해주세요😅");
+      ModalError("입력란이 비어 있습니다. 할 일을 작성해주세요😅");
       setValue("");
       return;
     }

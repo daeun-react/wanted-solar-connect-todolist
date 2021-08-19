@@ -1,7 +1,8 @@
-import { CheckOutlined, DeleteOutlined } from "@ant-design/icons";
-import { Itodo } from "components/todo/TodoService";
 import React from "react";
 import styled, { css } from "styled-components";
+import { CheckOutlined, DeleteOutlined } from "@ant-design/icons";
+import { ModalConfirm } from "utils/modal";
+import { Itodo } from "components/todo/TodoService";
 
 const Remove = styled.div`
   display: flex;
@@ -64,7 +65,13 @@ const TodoItem = ({ toggleTodo, removeTodo, todo }: TodoItemProps) => {
   const done = false;
   const handleToggle = () => {};
 
-  const handleRemove = () => {};
+  const handleRemove = () => {
+    ModalConfirm(
+      `"${todo.text}" 할 일을 삭제하시겠습니까? `,
+      todo.id,
+      removeTodo
+    );
+  };
 
   return (
     <TodoItemBlock>
