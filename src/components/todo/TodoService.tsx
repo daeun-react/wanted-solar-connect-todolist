@@ -40,19 +40,20 @@ export const useTodo = () => {
     setTodoState((prevState) =>
       prevState.concat({
         ...todo,
-        id: nextId
+        id: nextId,
       })
     );
   };
 
   const loadData = () => {
     let data = localStorage.getItem("todos");
-    if (data === undefined) data = "";
-    initialTodos = JSON.parse(data!);
-    if (initialTodos && initialTodos.length >= 1) {
-      incrementNextId();
+    if (data) {
+      initialTodos = JSON.parse(data!);
+      if (initialTodos && initialTodos.length >= 1) {
+        incrementNextId();
+      }
+      setTodoState(initialTodos);
     }
-    setTodoState(initialTodos);
   };
 
   const saveData = () => {
@@ -65,6 +66,6 @@ export const useTodo = () => {
     incrementNextId,
     toggleTodo,
     removeTodo,
-    createTodo
+    createTodo,
   };
 };
