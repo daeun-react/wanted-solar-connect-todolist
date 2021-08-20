@@ -1,19 +1,39 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import "antd/dist/antd.css";
-import Spinner from "./components/common/Spinner";
+import { load, save, remove } from "utils/localStorage";
+import LoginModal from "components/login/LoginModal";
 import TodoContainer from "./components/todo/TodoContainer";
 
 function App() {
-  //@TODO login
-  let isLogged = true;
+  const [isLogged, setIsLogged] = useState(false);
+  const [loginModalVisible, setLoginModalVisible] = useState(false);
+
+  const onLogin = (username: string) => {
+    save("todo-user", username);
+    setIsLogged(true);
+  };
+
+  const onLogout = () => {
+    remove("todo-user");
+    setIsLogged(false);
+  };
+
+  useEffect(() => {
+    const username = load("todo-user");
+    username ? setIsLogged(true) : setLoginModalVisible(true);
+  }, [isLogged]);
 
   const RenderLayout = (
     <div>
-      <TodoContainer />
+      <TodoContainer onLogout={onLogout} />
     </div>
   );
 
-  return isLogged ? RenderLayout : <Spinner mask />;
+  return isLogged ? (
+    RenderLayout
+  ) : (
+    <LoginModal visible={loginModalVisible} onLogin={onLogin} />
+  );
 }
 
 export default App;

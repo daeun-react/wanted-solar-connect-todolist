@@ -6,7 +6,11 @@ import TodoList from "./template/list/TodoList";
 import TodoCreate from "./template/create/TodoCreate";
 import TodoFooter from "./template/footer/TodoFooter";
 
-const TodoContainer = () => {
+interface TodoContainerProps {
+  onLogout: () => void;
+}
+
+const TodoContainer: React.FC<TodoContainerProps> = ({ onLogout }) => {
   const {
     todoState,
     nextIdState,
@@ -19,7 +23,7 @@ const TodoContainer = () => {
   return (
     <>
       <TodoTemplate>
-        <TodoHead />
+        <TodoHead onLogout={onLogout} />
         <TodoCreate
           nextId={nextIdState}
           createTodo={createTodo}
