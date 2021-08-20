@@ -40,7 +40,9 @@ const LoginModal: React.FC<LoginModalProps> = ({ visible, onLogin }) => {
   return (
     <Modal
       title="WELCOME"
+      okText="LOGIN"
       onOk={okFunc}
+      cancelButtonProps={{ style: { display: "none" } }}
       maskClosable={false}
       visible={visible}
       centered={true}

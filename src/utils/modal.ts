@@ -5,9 +5,8 @@ export const ModalConfirm = (
   id: number,
   removeTodo: (id: number) => void
 ): void => {
-  const { confirm } = Modal;
-  confirm({
-    title: "확인!",
+  Modal.confirm({
+    title: "DELETE",
     content,
     centered: true,
     onOk() {
@@ -21,7 +20,7 @@ export const ModalConfirm = (
 
 export const ModalError = (content: string, okFunc: () => void): void => {
   Modal.error({
-    title: "에러!",
+    title: "ERROR",
     content,
     centered: true,
     onOk() {
