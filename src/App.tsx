@@ -5,7 +5,7 @@ import LoginModal from "components/login/LoginModal";
 import TodoContainer from "components/todo/TodoContainer";
 import Spinner from "components/common/Spinner";
 
-function App() {
+const App = () => {
   const [isLogged, setIsLogged] = useState(false);
   const [loading, setLoading] = useState(false);
   const [loginModalVisible, setLoginModalVisible] = useState(false);
@@ -44,6 +44,6 @@ function App() {
       {loading && <Spinner mask />}
     </>
   );
-}
+};
 
 export default App;

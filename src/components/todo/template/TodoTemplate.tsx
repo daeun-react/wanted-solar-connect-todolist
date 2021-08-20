@@ -1,9 +1,13 @@
 import React from "react";
 import styled from "styled-components";
 
-function TodoTemplate(props: any) {
-  return <TodoTemplateBlock>{props.children}</TodoTemplateBlock>;
+interface TodoTemplateProps {
+  children: JSX.Element[] | JSX.Element;
 }
+
+const TodoTemplate = ({ children }: TodoTemplateProps) => {
+  return <TodoTemplateBlock>{children}</TodoTemplateBlock>;
+};
 
 const TodoTemplateBlock = styled.div`
   width: 70%;

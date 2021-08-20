@@ -1,4 +1,4 @@
-import React, { ReactElement } from "react";
+import React from "react";
 import styled from "styled-components";
 import { Spin, Row, Col } from "antd";
 import { SpinSize } from "antd/lib/spin";
@@ -16,9 +16,7 @@ interface IWrapperProp {
   readonly ["data-mask"]: boolean;
 }
 
-function Spinner(props: ISpinnerProps): ReactElement {
-  const { tip, size, delay, style, mask = false } = props;
-
+const Spinner = ({ tip, size, delay, style, mask = false }: ISpinnerProps) => {
   return (
     <StyledSpinnerWrapper
       className="spinner-wrap"
@@ -37,7 +35,7 @@ function Spinner(props: ISpinnerProps): ReactElement {
       </Col>
     </StyledSpinnerWrapper>
   );
-}
+};
 
 const StyledSpinnerWrapper = styled(Row)<IWrapperProp>`
   height: 100vh;

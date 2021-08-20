@@ -10,7 +10,7 @@ interface TodoContainerProps {
   onLogout: () => void;
 }
 
-const TodoContainer: React.FC<TodoContainerProps> = ({ onLogout }) => {
+const TodoContainer = ({ onLogout }: TodoContainerProps) => {
   const {
     todoState,
     nextIdState,

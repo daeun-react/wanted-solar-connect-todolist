@@ -8,7 +8,7 @@ interface TodoHeadProps {
   onLogout: () => void;
 }
 
-const TodoHead: React.FC<TodoHeadProps> = ({ onLogout }) => {
+const TodoHead = ({ onLogout }: TodoHeadProps) => {
   const [date, setDate] = useState(new Date());
 
   useEffect(() => {

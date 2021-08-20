@@ -7,7 +7,7 @@ interface LoginModalProps {
   onLogin: (username: string) => void;
 }
 
-const LoginModal: React.FC<LoginModalProps> = ({ visible, onLogin }) => {
+const LoginModal = ({ visible, onLogin }: LoginModalProps) => {
   const [form] = Form.useForm();
   const inputRef = useRef<Input>(null);
 
