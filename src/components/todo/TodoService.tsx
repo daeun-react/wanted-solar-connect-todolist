@@ -5,6 +5,7 @@ export type Itodo = {
   id: number;
   text: string;
   done: boolean;
+  deadline: moment.Moment;
 };
 
 let initialTodos: Itodo[] = [];

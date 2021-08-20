@@ -3,6 +3,8 @@ import styled, { css } from "styled-components";
 import { CheckOutlined, DeleteOutlined } from "@ant-design/icons";
 import { ModalConfirm } from "utils/modal";
 import { Itodo } from "components/todo/TodoService";
+import { getDate } from "utils/date";
+import { DATE_OPTION } from "utils/constants";
 
 const Remove = styled.div`
   display: flex;
@@ -55,6 +57,14 @@ const Text = styled.div<{ done: boolean }>`
     `}
 `;
 
+const DeadLine = styled.div<{ done: boolean }>`
+  margin-right: 8px;
+  padding: 2px 10px;
+  border-radius: 8px;
+  background-color: ${({ done }) => (done ? "#ced4da" : "#33bb77")};
+  color: white;
+`;
+
 interface TodoItemProps {
   toggleTodo: (id: number) => void;
   removeTodo: (id: number) => void;
@@ -62,7 +72,7 @@ interface TodoItemProps {
 }
 
 const TodoItem = ({ toggleTodo, removeTodo, todo }: TodoItemProps) => {
-  const { id, text, done } = todo;
+  const { id, text, done, deadline } = todo;
 
   const handleToggle = () => {
     toggleTodo(id);
@@ -77,6 +87,9 @@ const TodoItem = ({ toggleTodo, removeTodo, todo }: TodoItemProps) => {
       <CheckCircle done={done} onClick={handleToggle}>
         {done && <CheckOutlined />}
       </CheckCircle>
+      <DeadLine done={done}>
+        {getDate(new Date(Date.parse(deadline.toString())), DATE_OPTION)}
+      </DeadLine>
       <Text done={done}>{text}</Text>
       <Remove onClick={handleRemove}>
         <DeleteOutlined />

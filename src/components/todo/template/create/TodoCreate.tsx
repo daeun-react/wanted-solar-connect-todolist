@@ -1,10 +1,11 @@
-import React, { useState } from "react";
-import styled from "styled-components";
+import React, { useState, useRef, CSSProperties } from "react";
+import styled, { css } from "styled-components";
+import { DatePicker } from "antd";
 import { PlusCircleOutlined } from "@ant-design/icons";
 import { ModalError } from "utils/modal";
 import { Itodo } from "components/todo/TodoService";
 
-const CircleButton = styled.button<{ open: boolean }>`
+const CircleButton = styled.button<{ error: boolean }>`
   background: #33bb77;
   width: 50px;
   height: 50px;
@@ -20,6 +21,14 @@ const CircleButton = styled.button<{ open: boolean }>`
   display: flex;
   align-items: center;
   justify-content: center;
+
+  transition: 0.125s all ease-in;
+  ${({ error }) =>
+    error &&
+    css`
+      background: #ff6b6b;
+      transform: translate(+50%, 0%) rotate(45deg);
+    `};
 `;
 
 const InsertFormPositioner = styled.div`
@@ -39,7 +48,7 @@ const InsertForm = styled.form`
 const Input = styled.input`
   padding: 12px;
   border: 1px solid #dddddd;
-  width: 100%;
+  width: 60%;
   outline: none;
   font-size: 21px;
   box-sizing: border-box;
@@ -63,17 +72,42 @@ const TodoCreate = ({
 }: TodoCreateProps) => {
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState("");
+  const [deadline, setDeadLine] = useState<moment.Moment | null>(null);
+  const [error, setError] = useState(false);
+
+  const inputRef = useRef<HTMLInputElement>(null);
+
+  const disabledDate = (current: moment.Moment): boolean => {
+    return (
+      current && current.valueOf() < new Date().setHours(0, 0, 0, 0).valueOf()
+    );
+  };
+
+  const handleDateChange = (date: moment.Moment | null, dateString: string) => {
+    setDeadLine(date);
+    setError(false);
+  };
 
   const handleToggle = () => setOpen(!open);
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) =>
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setValue(e.target.value);
+    setError(false);
+  };
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault(); // 새로고침 방지
+    e.preventDefault();
 
     if (!value.trim()) {
-      ModalError("입력란이 비어 있습니다. 할 일을 작성해주세요😅");
-      setValue("");
+      const focusInput = () => inputRef.current?.focus();
+      ModalError("할 일을 작성해주세요😅", focusInput);
+      setError(true);
+      return;
+    }
+
+    if (!deadline) {
+      setOpen(true);
+      setError(true);
       return;
     }
 
@@ -81,25 +115,41 @@ const TodoCreate = ({
       id: nextId,
       text: value,
       done: false,
+      deadline: deadline,
     });
-    incrementNextId(); // nextId 하나 증가
+    incrementNextId();
 
-    setValue(""); // input 초기화
-    setOpen(false); // open 닫기
+    setValue("");
+    setDeadLine(null);
   };
 
   return (
     <>
       <InsertFormPositioner>
         <InsertForm onSubmit={handleSubmit}>
+          <DatePicker
+            placeholder="When's the deadline?"
+            value={deadline}
+            onChange={handleDateChange}
+            format={"MMM DD, YYYY"}
+            open={open}
+            onOpenChange={handleToggle}
+            disabledDate={disabledDate}
+            size="large"
+            style={{
+              width: "40%",
+            }}
+          />
+
           <Input
             autoFocus
             placeholder="What's need to be done?"
             onChange={handleChange}
             value={value}
+            ref={inputRef}
           />
 
-          <CircleButton onClick={handleToggle} open={open}>
+          <CircleButton error={error}>
             <PlusCircleOutlined />
           </CircleButton>
         </InsertForm>

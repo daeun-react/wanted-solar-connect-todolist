@@ -19,10 +19,13 @@ export const ModalConfirm = (
   });
 };
 
-export const ModalError = (content: string): void => {
+export const ModalError = (content: string, okFunc: () => void): void => {
   Modal.error({
     title: "에러!",
     content,
     centered: true,
+    onOk() {
+      okFunc();
+    },
   });
 };
