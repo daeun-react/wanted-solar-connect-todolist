@@ -6,12 +6,16 @@ import { Itodo } from "components/todo/TodoService";
 import { getDate } from "utils/date";
 import { DATE_OPTION } from "utils/constants";
 
-const Remove = styled.div`
+const Remove = styled.div<{ done: boolean }>`
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #119955;
+  color: ${({ done }) => (done ? "#ff6b6b" : "#119955")};
   font-size: 16px;
+
+  &:hover {
+    color: #ff6b6b;
+  }
 `;
 
 const TodoItemBlock = styled.div`
@@ -91,7 +95,7 @@ const TodoItem = ({ toggleTodo, removeTodo, todo }: TodoItemProps) => {
         {getDate(new Date(Date.parse(deadline.toString())), DATE_OPTION)}
       </DeadLine>
       <Text done={done}>{text}</Text>
-      <Remove onClick={handleRemove}>
+      <Remove done={done} onClick={handleRemove}>
         <DeleteOutlined />
       </Remove>
     </TodoItemBlock>

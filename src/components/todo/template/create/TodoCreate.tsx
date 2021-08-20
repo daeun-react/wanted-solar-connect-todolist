@@ -1,4 +1,4 @@
-import React, { useState, useRef, CSSProperties } from "react";
+import React, { useState, useRef } from "react";
 import styled, { css } from "styled-components";
 import { DatePicker } from "antd";
 import { PlusCircleOutlined } from "@ant-design/icons";
@@ -21,8 +21,8 @@ const CircleButton = styled.button<{ error: boolean }>`
   display: flex;
   align-items: center;
   justify-content: center;
-
   transition: 0.125s all ease-in;
+
   ${({ error }) =>
     error &&
     css`
@@ -48,14 +48,23 @@ const InsertForm = styled.form`
 const Input = styled.input`
   padding: 12px;
   border: 1px solid #dddddd;
-  width: 60%;
+  width: 65%;
   outline: none;
-  font-size: 21px;
+  font-size: 16px;
   box-sizing: border-box;
   color: #119955;
   &::placeholder {
     color: #dddddd;
-    font-size: 16px;
+  }
+`;
+
+const DatePickerDiv = styled(DatePicker)`
+  input {
+    color: #119955;
+
+    &::placeholder {
+      color: #dddddd;
+    }
   }
 `;
 
@@ -77,11 +86,8 @@ const TodoCreate = ({
 
   const inputRef = useRef<HTMLInputElement>(null);
 
-  const disabledDate = (current: moment.Moment): boolean => {
-    return (
-      current && current.valueOf() < new Date().setHours(0, 0, 0, 0).valueOf()
-    );
-  };
+  const disabledDate = (current: moment.Moment): boolean =>
+    current && current.valueOf() < new Date().setHours(0, 0, 0, 0).valueOf();
 
   const handleDateChange = (date: moment.Moment | null, dateString: string) => {
     setDeadLine(date);
@@ -127,8 +133,8 @@ const TodoCreate = ({
     <>
       <InsertFormPositioner>
         <InsertForm onSubmit={handleSubmit}>
-          <DatePicker
-            placeholder="When's the deadline?"
+          <DatePickerDiv
+            placeholder="deadline"
             value={deadline}
             onChange={handleDateChange}
             format={"MMM DD, YYYY"}
@@ -137,7 +143,7 @@ const TodoCreate = ({
             disabledDate={disabledDate}
             size="large"
             style={{
-              width: "40%",
+              width: "35%",
             }}
           />
 
