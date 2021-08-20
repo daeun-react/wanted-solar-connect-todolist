@@ -2,6 +2,8 @@ import React, { useState, useRef } from "react";
 import styled, { css } from "styled-components";
 import { DatePicker } from "antd";
 import { PlusCircleOutlined } from "@ant-design/icons";
+import { DATE_OPTION } from "utils/constants";
+import { getDate } from "utils/date";
 import { ModalError } from "utils/modal";
 import { Itodo } from "components/todo/TodoService";
 
@@ -9,12 +11,14 @@ interface TodoCreateProps {
   nextId: number;
   createTodo: (todo: Itodo) => void;
   incrementNextId: () => void;
+  todos: Itodo[];
 }
 
 const TodoCreate = ({
   nextId,
   createTodo,
   incrementNextId,
+  todos,
 }: TodoCreateProps) => {
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState("");
@@ -38,19 +42,36 @@ const TodoCreate = ({
     setError(false);
   };
 
+  const handleErrorModal = (msg: string) => {
+    const focusInput = () => inputRef.current?.focus();
+    ModalError(msg, focusInput);
+    setValue("");
+    setError(true);
+  };
+
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     if (!value.trim()) {
-      const focusInput = () => inputRef.current?.focus();
-      ModalError("할 일을 작성해주세요😅", focusInput);
-      setError(true);
+      handleErrorModal("할 일을 작성해주세요😅");
       return;
     }
 
     if (!deadline) {
       setOpen(true);
       setError(true);
+      return;
+    }
+
+    const isExist = todos.filter(
+      (todo) =>
+        getDate(new Date(Date.parse(todo.deadline.toString())), DATE_OPTION) ===
+          getDate(new Date(Date.parse(deadline.toString())), DATE_OPTION) &&
+        todo.text === value
+    );
+
+    if (isExist.length) {
+      handleErrorModal("이미 등록된 항목입니다.😅");
       return;
     }
 

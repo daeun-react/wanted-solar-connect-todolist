@@ -28,6 +28,7 @@ const TodoContainer = ({ onLogout }: TodoContainerProps) => {
           nextId={nextIdState}
           createTodo={createTodo}
           incrementNextId={incrementNextId}
+          todos={todoState}
         />
         <TodoList
           toggleTodo={toggleTodo}
