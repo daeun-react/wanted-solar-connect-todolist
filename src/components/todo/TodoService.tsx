@@ -1,5 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useState, useEffect } from "react";
+import { load, save } from "utils/localStorage";
 
 export type Itodo = {
   id: number;
@@ -45,18 +46,22 @@ export const useTodo = () => {
   };
 
   const loadData = () => {
-    let data = localStorage.getItem("todos");
+    const username = load("todo-user");
+    let data = load(`${username}-todos`);
     if (data) {
       initialTodos = JSON.parse(data!);
       setTodoState(initialTodos);
       setNextIdState(
         Math.max(...initialTodos.map((todo: Itodo) => todo.id)) + 1
       );
+    } else {
+      setTodoState([]);
     }
   };
 
   const saveData = () => {
-    localStorage.setItem("todos", JSON.stringify(todoState));
+    const username = load("todo-user");
+    save(`${username}-todos`, JSON.stringify(todoState));
   };
 
   return {
