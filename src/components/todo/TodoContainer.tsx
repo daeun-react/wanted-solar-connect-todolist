@@ -1,10 +1,10 @@
 import React from "react";
-import { useTodo } from "./TodoService";
-import TodoTemplate from "./template/TodoTemplate";
-import TodoHead from "./template/head/TodoHead";
-import TodoList from "./template/list/TodoList";
-import TodoCreate from "./template/create/TodoCreate";
-import TodoFooter from "./template/footer/TodoFooter";
+import TodoTemplate from "components/todo/template/TodoTemplate";
+import TodoHead from "components/todo/template/head/TodoHead";
+import TodoCreate from "components/todo/template/create/TodoCreate";
+import TodoList from "components/todo/template/list/TodoList";
+import TodoFooter from "components/todo/template/footer/TodoFooter";
+import { useTodo } from "components/todo/TodoService";
 
 interface TodoContainerProps {
   onLogout: () => void;

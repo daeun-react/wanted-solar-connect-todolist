@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { Result } from "antd";
 import { SmileTwoTone } from "@ant-design/icons";
 import { Itodo } from "components/todo/TodoService";
-import TodoItem from "./item/TodoItem";
+import TodoItem from "components/todo/template/list/item/TodoItem";
 
 const TodoListBlock = styled.div`
   flex: 1;

@@ -1,10 +1,10 @@
 import React from "react";
 import styled, { css } from "styled-components";
 import { CheckOutlined, DeleteOutlined } from "@ant-design/icons";
+import { DATE_OPTION } from "utils/constants";
+import { getDate } from "utils/date";
 import { ModalConfirm } from "utils/modal";
 import { Itodo } from "components/todo/TodoService";
-import { getDate } from "utils/date";
-import { DATE_OPTION } from "utils/constants";
 
 const Remove = styled.div<{ done: boolean }>`
   display: flex;

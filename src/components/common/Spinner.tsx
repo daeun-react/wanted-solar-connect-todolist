@@ -2,8 +2,7 @@ import React, { ReactElement } from "react";
 import styled from "styled-components";
 import { Spin, Row, Col } from "antd";
 import { SpinSize } from "antd/lib/spin";
-
-import Loading from "./Loading";
+import Loading from "components/common/Loading";
 
 interface ISpinnerProps {
   tip?: string;

@@ -1,4 +1,4 @@
-import { TIME_ZONE } from "./constants";
+import { TIME_ZONE } from "utils/constants";
 
 export const getDate = (
   date: Date,

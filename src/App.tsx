@@ -2,8 +2,8 @@ import React, { useState, useEffect } from "react";
 import "antd/dist/antd.css";
 import { load, save, remove } from "utils/localStorage";
 import LoginModal from "components/login/LoginModal";
-import TodoContainer from "./components/todo/TodoContainer";
-import Spinner from "./components/common/Spinner";
+import TodoContainer from "components/todo/TodoContainer";
+import Spinner from "components/common/Spinner";
 
 function App() {
   const [isLogged, setIsLogged] = useState(false);
