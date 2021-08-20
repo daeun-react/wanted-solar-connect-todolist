@@ -71,6 +71,7 @@ const TodoCreate = ({
       <InsertFormPositioner>
         <InsertForm onSubmit={handleSubmit}>
           <DatePickerDiv
+            autoFocus
             placeholder="deadline"
             value={deadline}
             onChange={handleDateChange}
@@ -85,7 +86,6 @@ const TodoCreate = ({
           />
 
           <Input
-            autoFocus
             placeholder="What's need to be done?"
             onChange={handleChange}
             value={value}
