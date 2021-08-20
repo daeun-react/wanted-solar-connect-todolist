@@ -16,12 +16,6 @@ interface IWrapperProp {
   readonly ["data-mask"]: boolean;
 }
 
-const StyledSpinnerWrapper = styled(Row)<IWrapperProp>`
-  height: 100vh;
-  background-color: ${(styleProps) =>
-    styleProps["data-mask"] ? "rgba(0, 0, 0, 0.1)" : "transparent"};
-`;
-
 function Spinner(props: ISpinnerProps): ReactElement {
   const { tip, size, delay, style, mask = false } = props;
 
@@ -44,6 +38,12 @@ function Spinner(props: ISpinnerProps): ReactElement {
     </StyledSpinnerWrapper>
   );
 }
+
+const StyledSpinnerWrapper = styled(Row)<IWrapperProp>`
+  height: 100vh;
+  background-color: ${(styleProps) =>
+    styleProps["data-mask"] ? "rgba(0, 0, 0, 0.1)" : "transparent"};
+`;
 
 Spinner.defaultProps = {
   tip: "로딩중입니다.",

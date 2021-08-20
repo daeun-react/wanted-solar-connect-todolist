@@ -5,69 +5,6 @@ import { PlusCircleOutlined } from "@ant-design/icons";
 import { ModalError } from "utils/modal";
 import { Itodo } from "components/todo/TodoService";
 
-const CircleButton = styled.button<{ error: boolean }>`
-  background: #33bb77;
-  width: 50px;
-  height: 50px;
-  align-items: center;
-  justify-content: center;
-  font-size: 60px;
-  left: 50%;
-  transform: translate(50%, 0%);
-  color: white;
-  border-radius: 50%;
-  border: none;
-  outline: none;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: 0.125s all ease-in;
-
-  ${({ error }) =>
-    error &&
-    css`
-      background: #ff6b6b;
-      transform: translate(+50%, 0%) rotate(45deg);
-    `};
-`;
-
-const InsertFormPositioner = styled.div`
-  width: 100%;
-  border-bottom: 1px solid #eeeeee;
-`;
-
-const InsertForm = styled.form`
-  display: flex;
-  background: #eeeeee;
-  padding-left: 40px;
-  padding-top: 36px;
-  padding-right: 60px;
-  padding-bottom: 36px;
-`;
-
-const Input = styled.input`
-  padding: 12px;
-  border: 1px solid #dddddd;
-  width: 65%;
-  outline: none;
-  font-size: 16px;
-  box-sizing: border-box;
-  color: #119955;
-  &::placeholder {
-    color: #dddddd;
-  }
-`;
-
-const DatePickerDiv = styled(DatePicker)`
-  input {
-    color: #119955;
-
-    &::placeholder {
-      color: #dddddd;
-    }
-  }
-`;
-
 interface TodoCreateProps {
   nextId: number;
   createTodo: (todo: Itodo) => void;
@@ -163,5 +100,67 @@ const TodoCreate = ({
     </>
   );
 };
+
+const InsertFormPositioner = styled.div`
+  width: 100%;
+  border-bottom: 1px solid #eeeeee;
+`;
+
+const InsertForm = styled.form`
+  display: flex;
+  background: #eeeeee;
+  padding-left: 40px;
+  padding-top: 36px;
+  padding-right: 60px;
+  padding-bottom: 36px;
+`;
+
+const DatePickerDiv = styled(DatePicker)`
+  input {
+    color: #119955;
+    &::placeholder {
+      color: #dddddd;
+    }
+  }
+`;
+
+const Input = styled.input`
+  padding: 12px;
+  border: 1px solid #dddddd;
+  width: 65%;
+  outline: none;
+  font-size: 16px;
+  box-sizing: border-box;
+  color: #119955;
+  &::placeholder {
+    color: #dddddd;
+  }
+`;
+
+const CircleButton = styled.button<{ error: boolean }>`
+  background: #33bb77;
+  width: 50px;
+  height: 50px;
+  align-items: center;
+  justify-content: center;
+  font-size: 60px;
+  left: 50%;
+  transform: translate(50%, 0%);
+  color: white;
+  border-radius: 50%;
+  border: none;
+  outline: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: 0.125s all ease-in;
+
+  ${({ error }) =>
+    error &&
+    css`
+      background: #ff6b6b;
+      transform: translate(+50%, 0%) rotate(45deg);
+    `};
+`;
 
 export default React.memo(TodoCreate);

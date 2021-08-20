@@ -4,6 +4,40 @@ import { DATE_OPTION, DAY_OPTION, TIME_OPTION } from "utils/constants";
 import { getDate } from "utils/date";
 import { load } from "utils/localStorage";
 
+interface TodoHeadProps {
+  onLogout: () => void;
+}
+
+const TodoHead: React.FC<TodoHeadProps> = ({ onLogout }) => {
+  const [date, setDate] = useState(new Date());
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setDate(new Date());
+    }, 1000);
+
+    return () => {
+      clearInterval(timer);
+    };
+  }, []);
+
+  return (
+    <>
+      <UserBlock>
+        <UserName>HELLO, {load("todo-user")}</UserName>
+        <LogoutButton onClick={onLogout}>LOGOUT</LogoutButton>
+      </UserBlock>
+      <TodoHeadBlock>
+        <DateBlock>
+          <DayText>{getDate(date, DAY_OPTION)}</DayText>
+          <DateText>{getDate(date, DATE_OPTION)}</DateText>
+        </DateBlock>
+        <TimeBlock>{getDate(date, TIME_OPTION)}</TimeBlock>
+      </TodoHeadBlock>
+    </>
+  );
+};
+
 const UserBlock = styled.div`
   display: flex;
   justify-content: flex-end;
@@ -70,39 +104,5 @@ const TimeBlock = styled.div`
   color: #808080;
   text-align: center;
 `;
-
-interface TodoHeadProps {
-  onLogout: () => void;
-}
-
-const TodoHead: React.FC<TodoHeadProps> = ({ onLogout }) => {
-  const [date, setDate] = useState(new Date());
-
-  useEffect(() => {
-    const timer = setInterval(() => {
-      setDate(new Date());
-    }, 1000);
-
-    return () => {
-      clearInterval(timer);
-    };
-  }, []);
-
-  return (
-    <>
-      <UserBlock>
-        <UserName>HELLO, {load("todo-user")}</UserName>
-        <LogoutButton onClick={onLogout}>LOGOUT</LogoutButton>
-      </UserBlock>
-      <TodoHeadBlock>
-        <DateBlock>
-          <DayText>{getDate(date, DAY_OPTION)}</DayText>
-          <DateText>{getDate(date, DATE_OPTION)}</DateText>
-        </DateBlock>
-        <TimeBlock>{getDate(date, TIME_OPTION)}</TimeBlock>
-      </TodoHeadBlock>
-    </>
-  );
-};
 
 export default React.memo(TodoHead);

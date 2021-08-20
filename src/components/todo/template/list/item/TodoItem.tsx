@@ -6,6 +6,39 @@ import { getDate } from "utils/date";
 import { ModalConfirm } from "utils/modal";
 import { Itodo } from "components/todo/TodoService";
 
+interface TodoItemProps {
+  toggleTodo: (id: number) => void;
+  removeTodo: (id: number) => void;
+  todo: Itodo;
+}
+
+const TodoItem = ({ toggleTodo, removeTodo, todo }: TodoItemProps) => {
+  const { id, text, done, deadline } = todo;
+
+  const handleToggle = () => {
+    toggleTodo(id);
+  };
+
+  const handleRemove = () => {
+    ModalConfirm(`"${text}" 할 일을 삭제하시겠습니까? `, id, removeTodo);
+  };
+
+  return (
+    <TodoItemBlock>
+      <CheckCircle done={done} onClick={handleToggle}>
+        {done && <CheckOutlined />}
+      </CheckCircle>
+      <DeadLine done={done}>
+        {getDate(new Date(Date.parse(deadline.toString())), DATE_OPTION)}
+      </DeadLine>
+      <Text done={done}>{text}</Text>
+      <Remove done={done} onClick={handleRemove}>
+        <DeleteOutlined />
+      </Remove>
+    </TodoItemBlock>
+  );
+};
+
 const Remove = styled.div<{ done: boolean }>`
   display: flex;
   align-items: center;
@@ -49,6 +82,14 @@ const CheckCircle = styled.div<{ done: boolean }>`
     `}
 `;
 
+const DeadLine = styled.div<{ done: boolean }>`
+  margin-right: 8px;
+  padding: 2px 10px;
+  border-radius: 8px;
+  background-color: ${({ done }) => (done ? "#ced4da" : "#33bb77")};
+  color: white;
+`;
+
 const Text = styled.div<{ done: boolean }>`
   flex: 1;
   font-size: 16px;
@@ -60,46 +101,5 @@ const Text = styled.div<{ done: boolean }>`
       text-decoration: line-through;
     `}
 `;
-
-const DeadLine = styled.div<{ done: boolean }>`
-  margin-right: 8px;
-  padding: 2px 10px;
-  border-radius: 8px;
-  background-color: ${({ done }) => (done ? "#ced4da" : "#33bb77")};
-  color: white;
-`;
-
-interface TodoItemProps {
-  toggleTodo: (id: number) => void;
-  removeTodo: (id: number) => void;
-  todo: Itodo;
-}
-
-const TodoItem = ({ toggleTodo, removeTodo, todo }: TodoItemProps) => {
-  const { id, text, done, deadline } = todo;
-
-  const handleToggle = () => {
-    toggleTodo(id);
-  };
-
-  const handleRemove = () => {
-    ModalConfirm(`"${text}" 할 일을 삭제하시겠습니까? `, id, removeTodo);
-  };
-
-  return (
-    <TodoItemBlock>
-      <CheckCircle done={done} onClick={handleToggle}>
-        {done && <CheckOutlined />}
-      </CheckCircle>
-      <DeadLine done={done}>
-        {getDate(new Date(Date.parse(deadline.toString())), DATE_OPTION)}
-      </DeadLine>
-      <Text done={done}>{text}</Text>
-      <Remove done={done} onClick={handleRemove}>
-        <DeleteOutlined />
-      </Remove>
-    </TodoItemBlock>
-  );
-};
 
 export default React.memo(TodoItem);
