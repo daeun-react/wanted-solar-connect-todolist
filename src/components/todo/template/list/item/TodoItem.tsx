@@ -20,7 +20,9 @@ const TodoItem = ({ toggleTodo, removeTodo, todo }: TodoItemProps) => {
   };
 
   const handleRemove = () => {
-    ModalConfirm(`"${text}" 할 일을 삭제하시겠습니까? `, id, removeTodo);
+    done
+      ? removeTodo(id)
+      : ModalConfirm(`"${text}" 할 일을 삭제하시겠습니까? `, id, removeTodo);
   };
 
   return (
